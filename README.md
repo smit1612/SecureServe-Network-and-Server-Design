@@ -23,6 +23,3 @@ SecureServe Network and Server Design is a comprehensive project associated with
 - Knowledge of **Domain Name System (DNS)** for translating domain names to IP addresses.
 - **System administration** expertise for managing servers and services.
 - Strong **problem-solving** and **crititcal thinking** skills to address technical challenges effectively.
-
-## Associated Institution
-This project is associated with Fanshawe College.
