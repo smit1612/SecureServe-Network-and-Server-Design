@@ -1,0 +1,122 @@
+en
+config t
+no ip domain-lookup
+no ip http server
+no ip http secure-server
+ip routing
+ipv6 unicast-routing
+hostname SpringR1
+service password-encryption
+enable secret class
+banner motd #Unauthorized access is not allowed.#
+line con 0
+password cisco
+login local
+logging synchronous
+exit
+line vty 0 15
+password cisco
+transport input ssh
+login
+logging synchronous
+exit
+
+
+username group4 secret cisco
+ip domain name shmc.ca
+
+vlan 3
+exit
+
+
+interface GigabitEthernet0/0
+ ip address 172.30.255.6 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ duplex auto
+ speed auto
+ ipv6 address 2001:CAFE:BEAD:BBBB::2/64
+ ipv6 eigrp 600
+ no shutdown
+!
+interface GigabitEthernet0/1
+ ip address 172.17.193.215 255.255.255.0
+ ip nat outside
+ ip virtual-reassembly in
+ duplex auto
+ speed auto
+ no shutdown
+!
+interface Serial0/1/0
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+interface Serial0/1/1
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+interface GigabitEthernet0/0/0
+ switchport access vlan 3
+ no ip address
+ no shutdown
+!
+interface GigabitEthernet0/0/1
+ no ip address
+!
+interface GigabitEthernet0/0/2
+ no ip address
+!
+interface GigabitEthernet0/0/3
+ no ip address
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan3
+ ip address 172.30.255.14 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ipv6 address 2001:CAFE:BEAD:DDDD::2/64
+ ipv6 eigrp 600
+ no shutdown
+!
+
+
+
+router eigrp 100
+ network 172.30.255.4 0.0.0.3
+ network 172.30.255.12 0.0.0.3
+ redistribute static
+ passive-interface GigabitEthernet0/1
+ eigrp router-id 3.3.3.3
+ no shutdown
+
+ipv6 router eigrp 600
+ passive-interface GigabitEthernet0/1
+ eigrp router-id 3.3.3.3
+ no shutdown
+ exit
+
+
+access-list 1 permit 172.30.0.0 0.0.255.255
+ip nat pool SPRINGHILL 172.17.193.215 172.17.193.219 netmask 255.255.255.0
+ip nat inside source list 1 pool SPRINGHILL overload
+ip route 0.0.0.0 0.0.0.0 172.17.193.1
+
+
+access-list 101 permit tcp 172.30.5.0 0.0.0.255 any eq 80
+access-list 101 permit tcp 172.30.5.0 0.0.0.255 any eq 443
+access-list 101 permit udp 172.30.5.0 0.0.0.255 any eq 53
+access-list 101 permit tcp 172.30.12.0 0.0.0.255 any eq 80
+access-list 101 permit tcp 172.30.12.0 0.0.0.255 any eq 443
+access-list 101 permit udp 172.30.12.0 0.0.0.255 any eq 53
+access-list 101 permit tcp 172.30.20.0 0.0.0.255 any eq 80
+access-list 101 permit tcp 172.30.20.0 0.0.0.255 any eq 443
+access-list 101 permit udp 172.30.20.0 0.0.0.255 any eq 53
+access-list 101 deny ip 172.30.5.0 0.0.0.255 any
+access-list 101 deny ip 172.30.12.0 0.0.0.255 any
+access-list 101 deny ip 172.30.20.0 0.0.0.255 any
+access-list 101 permit ip any any

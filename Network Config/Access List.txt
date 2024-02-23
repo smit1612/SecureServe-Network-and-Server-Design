@@ -1,0 +1,41 @@
+access-list 104 permit udp 172.30.12.0 0.0.0.255 172.30.7.0 0.0.0.255 eq domain
+access-list 104 permit udp 172.30.12.0 0.0.0.255 172.30.7.0 0.0.0.255 eq bootps
+access-list 104 permit udp 172.30.12.0 0.0.0.255 172.30.7.0 0.0.0.255 eq bootpc
+access-list 104 deny   ip 172.30.12.0 0.0.0.255 172.30.7.0 0.0.0.255
+access-list 104 permit udp 172.30.20.0 0.0.0.255 172.30.7.0 0.0.0.255 eq domain
+access-list 104 permit udp 172.30.20.0 0.0.0.255 172.30.7.0 0.0.0.255 eq bootps
+access-list 104 permit udp 172.30.20.0 0.0.0.255 172.30.7.0 0.0.0.255 eq bootpc
+access-list 104 deny   ip 172.30.20.0 0.0.0.255 172.30.7.0 0.0.0.255
+access-list 104 permit ip any any
+
+access-list 154 permit tcp 172.30.5.0 0.0.0.255 172.17.193.0 0.0.0.255 eq www
+access-list 154 permit tcp 172.30.5.0 0.0.0.255 172.17.193.0 0.0.0.255 eq 443
+access-list 154 permit udp 172.30.5.0 0.0.0.255 172.17.193.0 0.0.0.255 eq domain
+access-list 154 permit tcp 172.30.12.0 0.0.0.255 172.17.193.0 0.0.0.255 eq www
+access-list 154 permit tcp 172.30.12.0 0.0.0.255 172.17.193.0 0.0.0.255 eq 443
+access-list 154 permit udp 172.30.12.0 0.0.0.255 172.17.193.0 0.0.0.255 eq domain
+access-list 154 permit tcp 172.30.20.0 0.0.0.255 172.17.193.0 0.0.0.255 eq 443
+access-list 154 permit tcp 172.30.20.0 0.0.0.255 172.17.193.0 0.0.0.255 eq www
+access-list 154 permit udp 172.30.20.0 0.0.0.255 172.17.193.0 0.0.0.255 eq domain
+access-list 154 deny   ip 172.30.5.0 0.0.0.255 172.17.193.0 0.0.0.255
+access-list 154 deny   ip 172.30.12.0 0.0.0.255 172.17.193.0 0.0.0.255
+access-list 154 deny   ip 172.30.20.0 0.0.0.255 172.17.193.0 0.0.0.255
+access-list 154 permit ip any any
+
+ipv6 router eigrp 600
+ eigrp router-id 11.11.11.11
+ no shutdown
+!
+!
+!
+!
+ipv6 access-list VISITOR
+ permit udp 2001:CAFE:BEAD:2224::0/64 2001:CAFE:BEAD:1117::0/64 eq domain
+ permit udp 2001:CAFE:BEAD:2224::0/64 2001:CAFE:BEAD:1117::0/64 eq bootpc
+ permit udp 2001:CAFE:BEAD:2224::0/64 2001:CAFE:BEAD:1117::0/64 eq bootps
+ deny ipv6 2001:CAFE:BEAD:2224::0/64 2001:CAFE:BEAD:1117::0/64
+ permit udp 2001:CAFE:BEAD:3334::0/64 2001:CAFE:BEAD:1117::0/64 eq domain
+ permit udp 2001:CAFE:BEAD:3334::0/64 2001:CAFE:BEAD:1117::0/64 eq bootpc
+ permit udp 2001:CAFE:BEAD:3334::0/64 2001:CAFE:BEAD:1117::0/64 eq bootps
+ deny ipv6 2001:CAFE:BEAD:3334::0/64 2001:CAFE:BEAD:1117::0/64
+ permit ipv6 any any

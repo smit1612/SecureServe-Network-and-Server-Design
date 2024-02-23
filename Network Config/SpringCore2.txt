@@ -1,0 +1,264 @@
+en
+config t
+no ip domain-lookup
+no ip http server
+no ip http secure-server
+ip routing
+ipv6 unicast-routing
+hostname SpringCore2
+service password-encryption
+enable secret class
+banner motd #Unauthorized access is not allowed.#
+line con 0
+password cisco
+login
+logging synchronous
+exit
+line vty 0 15
+password cisco
+transport input ssh
+login local
+logging synchronous
+exit
+
+
+username group4 secret cisco
+ip domain-name shmc.ca
+
+vtp domain springmedic
+vtp mode transparent
+
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 100,110,120,130,140,199 priority 28672
+spanning-tree vlan 200,210,220,230,299-300,310,320,330,399 priority 24576
+
+
+vlan 200,210,220,230,299,300,310,320,330,399
+
+
+interface Port-channel2
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 40
+ switchport trunk allowed vlan 1000
+ switchport mode trunk
+ switchport nonegotiate
+ no shutdown
+!
+interface FastEthernet0/1
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 40
+ switchport trunk allowed vlan 100,110,120,130,140,199,500
+ switchport mode trunk
+ switchport nonegotiate
+ no shutdown
+!
+interface FastEthernet0/2
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 40
+ switchport trunk allowed vlan 100,110,120,130,140,199,500
+ switchport mode trunk
+ switchport nonegotiate
+ no shutdown
+!
+interface FastEthernet0/3
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 40
+ switchport trunk allowed vlan 200,210,220,230,299,500
+ switchport mode trunk
+ switchport nonegotiate
+ no shutdown
+!
+interface FastEthernet0/4
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 40
+ switchport trunk allowed vlan 200,210,220,230,299,500
+ switchport mode trunk
+ switchport nonegotiate
+ no shutdown
+!
+interface FastEthernet0/5
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 40
+ switchport trunk allowed vlan 300,310,320,330,399,500
+ switchport mode trunk
+ switchport nonegotiate
+ no shutdown
+!
+interface FastEthernet0/6
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 40
+ switchport trunk allowed vlan 300,310,320,330,399,500
+ switchport mode trunk
+ switchport nonegotiate
+ no shutdown
+!
+interface FastEthernet0/7
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 40
+ switchport trunk allowed vlan 1000
+ switchport mode trunk
+ channel-group 2 mode active
+ switchport nonegotiate
+ no shutdown
+!
+interface FastEthernet0/8
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 40
+ switchport trunk allowed vlan 1000
+ switchport mode trunk
+ channel-group 2 mode active
+ switchport nonegotiate
+ no shutdown
+!
+interface FastEthernet0/9
+ shutdown
+!
+interface FastEthernet0/10
+ no switchport
+ ip address 172.30.255.2 255.255.255.252
+ ipv6 address 2001:CAFE:BEAD:AAAA::2/64
+ ipv6 eigrp 600
+ no shutdown
+!
+interface FastEthernet0/11
+ shutdown
+!
+interface FastEthernet0/12
+ shutdown
+!
+interface FastEthernet0/13
+ shutdown
+!
+interface FastEthernet0/14
+ shutdown
+!
+interface FastEthernet0/15
+ shutdown
+!
+interface FastEthernet0/16
+ shutdown
+!
+interface FastEthernet0/17
+ shutdown
+!
+interface FastEthernet0/18
+ shutdown
+!
+interface FastEthernet0/19
+ shutdown
+!
+interface FastEthernet0/20
+ shutdown
+!
+interface FastEthernet0/21
+ shutdown
+!
+interface FastEthernet0/22
+ shutdown
+!
+interface FastEthernet0/23
+ no switchport
+ ip address 172.30.255.13 255.255.255.252
+ ip summary-address eigrp 100 172.30.8.0 255.255.248.0
+ ip summary-address eigrp 100 172.30.16.0 255.255.248.0
+ ipv6 address 2001:CAFE:BEAD:DDDD::1/64
+ ipv6 eigrp 600
+ ipv6 summary-address eigrp 600 2001:CAFE:BEAD:2220::/60
+ ipv6 summary-address eigrp 600 2001:CAFE:BEAD:3330::/60
+ no shutdown
+!
+interface FastEthernet0/24
+ shutdown
+!
+interface GigabitEthernet0/1
+ shutdown
+!
+interface GigabitEthernet0/2
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan200
+ ip address 172.30.8.1 255.255.255.0
+ ipv6 address 2001:CAFE:BEAD:2220::1/64
+ ipv6 eigrp 600
+ no shutdown
+!
+interface Vlan210
+ ip address 172.30.9.1 255.255.255.0
+ ipv6 address 2001:CAFE:BEAD:2221::1/64
+ ipv6 eigrp 600
+ no shutdown
+!
+interface Vlan220
+ ip address 172.30.10.1 255.255.255.0
+ ipv6 address 2001:CAFE:BEAD:2222::1/64
+ ipv6 eigrp 600
+ no shutdown
+!
+interface Vlan230
+ ip address 172.30.11.1 255.255.255.0
+ ipv6 address 2001:CAFE:BEAD:2223::1/64
+ ipv6 eigrp 600
+ no shutdown
+!
+interface Vlan299
+ ip address 172.30.12.1 255.255.255.0
+ ipv6 address 2001:CAFE:BEAD:2224::1/64
+ ipv6 eigrp 600
+ no shutdown
+!
+interface Vlan300
+ ip address 172.30.16.1 255.255.255.0
+ ipv6 address 2001:CAFE:BEAD:3330::1/64
+ ipv6 eigrp 600
+ no shutdown
+!
+interface Vlan310
+ ip address 172.30.17.1 255.255.255.0
+ ipv6 address 2001:CAFE:BEAD:3331::1/64
+ ipv6 eigrp 600
+ no shutdown
+!
+interface Vlan320
+ ip address 172.30.18.1 255.255.255.0
+ ipv6 address 2001:CAFE:BEAD:3332::1/64
+ ipv6 eigrp 600
+ no shutdown
+!
+interface Vlan330
+ ip address 172.30.19.1 255.255.255.0
+ ipv6 address 2001:CAFE:BEAD:3333::1/64
+ ipv6 eigrp 600
+ no shutdown
+!
+interface Vlan399
+ ip address 172.30.20.1 255.255.255.0
+ ipv6 address 2001:CAFE:BEAD:3334::1/64
+ ipv6 eigrp 600
+ no shutdown
+
+
+router eigrp 100
+ network 172.30.8.0 0.0.0.255
+ network 172.30.9.0 0.0.0.255
+ network 172.30.10.0 0.0.0.255
+ network 172.30.11.0 0.0.0.255
+ network 172.30.12.0 0.0.0.255
+ network 172.30.16.0 0.0.0.255
+ network 172.30.17.0 0.0.0.255
+ network 172.30.18.0 0.0.0.255
+ network 172.30.19.0 0.0.0.255
+ network 172.30.20.0 0.0.0.255
+ network 172.30.255.0 0.0.0.3
+ network 172.30.255.12 0.0.0.3
+ eigrp router-id 2.2.2.2
+ no shutdown
+
+ipv6 router eigrp 600
+ eigrp router-id 2.2.2.2
+ no shutdown
+ exit
